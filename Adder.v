@@ -5,7 +5,7 @@
 
 
 
-module Adder(A,B,Out);
+module adder(A,B,Out);
 input [31:0] A,B;
 output reg [31:0] Out;
 

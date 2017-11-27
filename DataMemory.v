@@ -45,7 +45,7 @@ module DataMemory(Address, WriteData, Clk, MemWrite, MemRead, ReadData);
     input MemRead; 			// Control signal for memory read 
     integer i;
     output reg[31:0] ReadData; // Contents of memory location at Address
-    reg [31:0] memory [0:4111]; // main Data memory 1K of 32 bit wide elements
+    reg [7:0] memory [0:4111]; // main Data memory 1K of 32 bit wide elements
       
     initial begin 
         for(i =0; i < 4112; i = i+1) begin
@@ -68,7 +68,7 @@ module DataMemory(Address, WriteData, Clk, MemWrite, MemRead, ReadData);
                     ReadData <= memory[Address];  //sends data stored at memory address Address[11:2] to the output mux
             end
             else
-                    ReadData <= 32'h0;    //sets Data Memory output to mux to zero if Memory read flag is not 1
+                    ReadData <= 8'h0;    //sets Data Memory output to mux to zero if Memory read flag is not 1
         end    
     /* Please fill in the implementation here */
 
