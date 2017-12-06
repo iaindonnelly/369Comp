@@ -60,42 +60,44 @@ wire  AOut15;
 
 
  InstrToMEMpipeline I_MEM();
- 
-  DataMemory DM1(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
-  DataMemory DM2(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
-  DataMemory DM3(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
-  DataMemory DM4(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
-  DataMemory DM5(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
-  DataMemory DM6(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
-  DataMemory DM7(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
-  DataMemory DM8(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
-  DataMemory DM9(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
-  DataMemory DM10(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
-  DataMemory DM11(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
-  DataMemory DM12(Address, WriteData, Clk, MemWrite, MemRead, ReadData);  
-  DataMemory DM13(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
-  DataMemory DM14(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
-  DataMemory DM15(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
-  DataMemory DM16(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
+  
+ MemStateMach mem_state(Clk,On,AddressC1,AddressC2,AddressC3,AddressC4);
+  
+ MultiMem DM1(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
+ MultiMem DM2(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
+ MultiMem DM3(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
+ MultiMem DM4(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
+ MultiMem DM5(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
+ MultiMem DM6(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
+ MultiMem DM7(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
+ MultiMem DM8(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
+ MultiMem DM9(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
+ MultiMem DM10(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
+ MultiMem DM11(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
+ MultiMem DM12(Address, WriteData, Clk, MemWrite, MemRead, ReadData);  
+ MultiMem DM13(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
+ MultiMem DM14(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
+ MultiMem DM15(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
+ MultiMem DM16(Address, WriteData, Clk, MemWrite, MemRead, ReadData); 
  
   MEMtoRegpipeline MEM_R();
   
   RegtoEXpipeline R_EX(  A1,B1,
-                    A2,B2,
-                    A3,B3,
-                    A4,B4,
-                    A5,B5,
-                    A6,B6,
-                    A7,B7,
-                    A8,B8,
-                    A9,B9,
-                    A10,B10,
-                    A11,B11,
-                    A12,B12,
-                    A13,B13,
-                    A14,B14,
-                    A15,B15,
-                    A16,B16);
+                        A2,B2,
+                        A3,B3,
+                        A4,B4,
+                        A5,B5,
+                        A6,B6,
+                        A7,B7,
+                        A8,B8,
+                        A9,B9,
+                        A10,B10,
+                        A11,B11,
+                        A12,B12,
+                        A13,B13,
+                        A14,B14,
+                        A15,B15,
+                        A16,B16);
   
 
    Sadder Sadder1(A1,B1,Out1);
