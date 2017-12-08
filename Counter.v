@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 12/06/2017 05:02:57 PM
+// Create Date: 12/07/2017 12:26:35 PM
 // Design Name: 
-// Module Name: Controller
+// Module Name: Counter
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,22 +20,26 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module Controller(Instruction,MemWrite,MemRead,C_EN);
-    
-    input [31:0] Instruction;
-    output reg MemWrite,MemRead,C_EN;
-    
-    
-    always@(*) begin
-        if(Instruction == 1) begin
-             MemWrite <= 0;
-             MemRead <= 1;
-             C_EN <= 1;
+module Counter(A,B,Clk,Reset);
+    input Clk;
+    input Reset;
+    input [5:0] A;
+    output reg [5:0] B;
+    initial begin
+    B <= 0;
+    end
+    always@(posedge Clk) begin
+    //if((A - 60) >> 6
+        if(Reset) begin
+            B <= 0;
         end
         else begin
-             MemWrite <= 0;
-             MemRead <= 0;
-             C_EN <= 1;
+            if(B == 6'd61) begin
+                B <= 1;
+            end 
+            else begin 
+                B <= A + 1;
+            end
         end
-    end
+    end 
 endmodule

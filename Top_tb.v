@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 11/08/2017 07:06:52 PM
+// Create Date: 12/07/2017 03:26:38 PM
 // Design Name: 
-// Module Name: Sadder
+// Module Name: Top_tb
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,19 +20,17 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module Sadder(A,B,Out);
-input [7:0] A,B;
-output reg [11:0] Out;
-//initial begin
-// Out <= 255;
-//end
-always@(*) begin
-    if(B < A) begin
-    Out <= A - B;
+module Top_tb();
+    reg Clk,Rst;
+    wire [11:0] Something;
+    top totb(Clk,Rst,Something);
+    initial begin
+            Clk <= 1'b0;
+            forever #250 Clk <= ~Clk;
     end
-    else begin 
-    Out <= B - A;
+    initial begin
+    Rst <= 1;
+    #500
+    Rst <= 0;
     end
-
-end
 endmodule

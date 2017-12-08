@@ -5,15 +5,16 @@
 int main(void) {
 
 
-	char Buffer[8192];
+	char Buffer[8193];
 	FILE *FP;
 	FP = fopen("SAD_testcase_trail_2017.txt","r");
-	for (int i = 0; i < 4096; i = i + 2){
+	for (int i = 0; i < 8192; i = i + 2){
 
 		char bung[3];
+
 		fscanf(FP, " %s", bung);
 		Buffer[i] = bung[0];
-		Buffer[i + 1] = bung[1];
+		Buffer[i+1] = bung[1];
 	
 	}
 	fclose(FP);
@@ -23,10 +24,10 @@ int main(void) {
 	FP5 = fopen("DM5.txt", "w"); FP6 = fopen("DM6.txt", "w"); FP7 = fopen("DM7.txt", "w"); FP8 = fopen("DM8.txt", "w");
 	FP9 = fopen("DM9.txt", "w"); FP10 = fopen("DM10.txt", "w"); FP11 = fopen("DM11.txt", "w"); FP12 = fopen("DM12.txt", "w");
 	FP13 = fopen("DM13.txt", "w"); FP14 = fopen("DM14.txt", "w"); FP15 = fopen("DM15.txt", "w"); FP16 = fopen("DM16.txt", "w");
-	for (int i = 0; i < 4096; i  = i +2)
+	for (int i = 0; i < 8192; i  = i +2) //testing
 	{
 		if ((i >> 1) % 16 == 0) {
-			fprintf(FP1, "%c%c\n", Buffer[i], Buffer[i+1]);
+			fprintf(FP1, "%c%c\n",Buffer[i],Buffer[i + 1]);
 		}
 		else if ((i >> 1) % 16 == 1) {
 			fprintf(FP2, "%c%c\n", Buffer[i], Buffer[i+1]);

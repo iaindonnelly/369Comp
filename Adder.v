@@ -6,10 +6,12 @@
 
 
 module adder(A,B,Out);
-input [31:0] A,B;
-output reg [31:0] Out;
+input [11:0] A,B;
+output reg [11:0] Out;
 
-
+//initial begin
+//    Out <= 255;
+//end
 always@(*) begin
 Out <= A+B;
 end

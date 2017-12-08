@@ -20,27 +20,48 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module Comparator(Clk,A,X,Y,Sad,place);
+module Comparator(Clk,A,X,Y,Sad,Xin,en);
 
-input Clk;
-input [7:0] A;
-input [12:0] place;
-output reg [5:0]X,Y;
-output reg Sad;
-reg [7:0]B;
-reg [63:0] C;
-initial begin 
- X <= 0;
- Y <= 0;
- B <= 0;
- Sad <= 0;
-end
-always @(*) begin
-    if(A < B) begin 
-        B = A;
-        C = place/64;
-        
-        
+    input Clk;
+    input en;
+    input [11:0] A;
+    input [5:0] Xin;//,Yin;
+    output reg [5:0]X,Y;
+    output reg [11:0] Sad;
+    reg [11:0]B;
+    reg [5:0] Count;
+    reg [5:0] XH,YH;
+    //reg [63:0] C;
+    initial begin 
     
+     X <= 0;
+     Y <= 0;
+     B <= 4080;
+     Sad <= 0;
+     Count <= 0;
+     XH <= 0;
+     YH <= 0;
+    end
+    always @(negedge Clk) begin 
+        if(en) begin
+            if(A < B) begin
+                B <= A;
+                X <= Xin;
+                Y <= Count;
+                Sad <= A;  
+                XH <= Xin; //might be unnec
+                YH <= Count;
+                Sad <= A;  
+            end
+            else begin
+                Sad <= B;
+                X <= XH;
+                Y <= YH;
+            end 
+            
+            if(Xin == 6'd61)begin
+                Count <= Count + 1;
+            end  //Y 
+        end
 end
 endmodule

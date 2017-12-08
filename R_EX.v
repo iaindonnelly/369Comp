@@ -52,28 +52,12 @@ module R_EX(A1,B1,
             A14out,B14out,
             A15out,B15out,
             A16out,B16out,
+            Count,CountO,
+            C_EN,C_Out,
             Clk
              );
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
+
+            input C_EN;
            input Clk; 
            input[7:0] A1,B1;
            input[7:0] A2,B2;
@@ -91,7 +75,9 @@ module R_EX(A1,B1,
            input[7:0] A14,B14;
            input[7:0] A15,B15;
            input[7:0] A16,B16;
-           
+           input [5:0] Count;
+           output reg [5:0] CountO;
+           output reg C_Out;
           output reg[7:0] A1out,B1out;
           output reg[7:0] A2out,B2out;
           output reg[7:0] A3out,B3out;
@@ -108,7 +94,43 @@ module R_EX(A1,B1,
           output reg[7:0] A14out,B14out;
           output reg[7:0] A15out,B15out;
           output reg[7:0] A16out,B16out;
-                    
+           initial begin
+                     A1out <= 0;
+                       B1out<=0;
+                       A2out<=0;
+                       B2out<=0;
+                       A3out<=0;
+                       B3out<=0;        
+                       A4out<=0;
+                       B4out<=0;
+                       A5out<=0;
+                       B5out<=0;
+                       A6out<=0;
+                       B6out<=0;
+                       A7out<=0;
+                       B7out<=0;
+                       A8out<=0;
+                       B8out<=0;
+                       A9out<=0;
+                       B9out<=0;
+                      A10out<=0;
+                      B10out<=0;
+                      A11out<=0;
+                      B11out<=0;
+                      A12out<=0;
+                      B12out<=0;
+                      A13out<=0;
+                      B13out<=0;
+                      A14out<=0;
+                      B14out<=0;
+                      A15out<=0;
+                      B15out<=0;
+                      A16out<=0;
+                      B16out<=0;
+                      CountO <= 0;
+                      C_Out <=0;
+   
+           end         
            always@(posedge Clk) begin
             A1out <= A1;
             B1out<=B1;  
@@ -142,6 +164,8 @@ module R_EX(A1,B1,
            B15out<= B15;
            A16out<= A16;
            B16out<= B16;
+           CountO <= Count;
+           C_Out <= C_EN;
             end 
             
             endmodule

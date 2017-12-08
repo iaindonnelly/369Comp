@@ -24,38 +24,41 @@ module top(Clk,Reset,Something);
 
 input Clk,Reset;
 
-output reg [7:0] Something;
-wire   A1,B1,Out1;
-wire   A2,B2,Out2;
-wire   A3,B3,Out3;
-wire   A4,B4,Out4;
-wire   A5,B5,Out5;
-wire   A6,B6,Out6;
-wire   A7,B7,Out7;
-wire   A8,B8,Out8;
-wire   A9,B9,Out9;
-wire  A10,B10,Out10;
-wire  A11,B11,Out11;
-wire  A12,B12,Out12;
-wire  A13,B13,Out13;
-wire  A14,B14,Out14;
-wire  A15,B15,Out15;
-wire  A16,B16,Out16;
-wire  AOut1 ;
-wire  AOut2 ;
-wire  AOut3 ;
-wire  AOut4 ;
-wire  AOut5 ;
-wire  AOut6 ;
-wire  AOut7 ;
-wire  AOut8 ;
-wire  AOut9 ;
-wire  AOut10 ;
-wire  AOut11;
-wire  AOut12;
-wire  AOut13;
-wire  AOut14;
-wire  AOut15;
+output reg [11:0] Something;
+wire [7:0]  A1,B1;
+wire [7:0]  A2,B2;
+wire [7:0]  A3,B3;
+wire [7:0]  A4,B4;
+wire [7:0]  A5,B5;
+wire [7:0]  A6,B6;
+wire [7:0]  A7,B7;
+wire [7:0]  A8,B8;
+wire [7:0]  A9,B9;
+wire [11:0] Out1,Out2,Out3,Out4,Out5,Out6,Out7,Out8
+    ,Out9,Out10,Out11 ,Out12,Out13,Out14,Out15,Out16;
+wire [7:0] A10,B10;
+wire [7:0] A11,B11;
+wire [7:0] A12,B12;
+wire [7:0] A13,B13;
+wire [7:0] A14,B14;
+wire [7:0] A15,B15;
+wire [7:0] A16,B16;
+wire [11:0] AOut1 ;
+wire [11:0] AOut2 ;
+wire [11:0] AOut3 ;
+wire [11:0] AOut4 ;
+wire [11:0] AOut5 ;
+wire [11:0] AOut6 ;
+wire [11:0] AOut7 ;
+wire [11:0] AOut8 ;
+wire [11:0] AOut9 ;
+wire [11:0] AOut10 ;
+wire [11:0] AOut11;
+wire [11:0] AOut12;
+wire [11:0] AOut13;
+wire [11:0] AOut14;
+wire [11:0] AOut15;
+
 
 wire [7:0] AM1 ,BM1 ,C1 ,D1 ,E1 ,F1,G1 ,H1 ,I1 ,J1 ,K1 ,L1 ,O1 ,M1 ,N1 ,P1 ;
 /*
@@ -102,36 +105,41 @@ wire [7:0] AddressC2;
 wire [7:0] AddressC3;
 wire [7:0] AddressC4;
 wire MemWriteOut,MemReadOut;
-wire [7:0] A1Out1,A1Out2,A1Out3,A1Out4,A1Out5,A1Out6,A1Out7,A1Out8;
+wire [11:0] A1Out1,A1Out2,A1Out3,A1Out4,A1Out5,A1Out6,A1Out7,A1Out8;
+wire [5:0] X,Out0,OutMEM,OutEX,OutEX2;
+wire [11:0] Sad;
+wire [5:0] XCoord,YCoord;
+wire C_EN,C_EX1,C_EX2,C_Out;
 
  //ClkDiv CD(Clk, Reset, ClkOut);
+  Counter CNTR(Out0,Out0,Clk,Reset);
 
- InstructionMemory IM(0, Instruction); 
+ InstructionMemory IM(10'b0, Instruction); 
 
-Controller CT(Instruction,MemWrite,MemRead);
+Controller CT(Instruction,MemWrite,MemRead,C_EN);
 
- InstrToMEM I_MEM(Clk,MemWrite,MemRead,MemWriteOut,MemReadOut);
+ InstrToMEM I_MEM(Clk,MemWrite,MemRead,MemWriteOut,MemReadOut,Out0,OutMEM,C_EN,C_Out);
   
  MemStateMach mem_state(Clk,AddressC1,AddressC2,AddressC3,AddressC4);
   
-  MultiMem DM1(AddressC1, 0, Clk, MemWriteOut,MemReadOut, AM1); //c1
-  MultiMem DM2(AddressC2, 0, Clk, MemWriteOut,MemReadOut, BM1); //c2
-  MultiMem DM3(AddressC3, 0, Clk, MemWriteOut,MemReadOut, C1); //c3
-  MultiMem DM4(AddressC4, 0, Clk, MemWriteOut,MemReadOut, D1); //c4
-  MultiMem DM5(AddressC1, 0, Clk, MemWriteOut,MemReadOut, E1); //c1
-  MultiMem DM6(AddressC2, 0, Clk, MemWriteOut,MemReadOut, F1); 
-  MultiMem DM7(AddressC3, 0, Clk, MemWriteOut,MemReadOut, G1); 
-  MultiMem DM8(AddressC4, 0, Clk, MemWriteOut,MemReadOut, H1); 
-  MultiMem DM9(AddressC1, 0, Clk, MemWriteOut,MemReadOut, I1); 
- MultiMem DM10(AddressC2, 0, Clk, MemWriteOut,MemReadOut, J1); 
- MultiMem DM11(AddressC3, 0, Clk, MemWriteOut,MemReadOut, K1); 
- MultiMem DM12(AddressC4, 0, Clk, MemWriteOut,MemReadOut, L1);  
- MultiMem DM13(AddressC1, 0, Clk, MemWriteOut,MemReadOut, O1); 
- MultiMem DM14(AddressC2, 0, Clk, MemWriteOut,MemReadOut, M1); 
- MultiMem DM15(AddressC3, 0, Clk, MemWriteOut,MemReadOut, N1); 
- MultiMem DM16(AddressC4, 0, Clk, MemWriteOut,MemReadOut, P1); 
+  MultiMem DM1(AddressC1, 8'b0, Clk, MemWriteOut,MemReadOut, AM1); //c1
+  MultiMem2 DM2(AddressC2, 8'b0, Clk, MemWriteOut,MemReadOut, BM1); //c2
+  MultiMem3 DM3(AddressC3, 8'b0, Clk, MemWriteOut,MemReadOut, C1); //c3
+  MultiMem4 DM4(AddressC4, 8'b0, Clk, MemWriteOut,MemReadOut, D1); //c4
+  MultiMem5 DM5(AddressC1, 8'b0, Clk, MemWriteOut,MemReadOut, E1); //c1
+  MultiMem6 DM6(AddressC2, 8'b0, Clk, MemWriteOut,MemReadOut, F1); 
+  MultiMem7 DM7(AddressC3, 8'b0, Clk, MemWriteOut,MemReadOut, G1); 
+  MultiMem8 DM8(AddressC4, 8'b0, Clk, MemWriteOut,MemReadOut, H1); 
+  MultiMem9 DM9(AddressC1, 8'b0, Clk, MemWriteOut,MemReadOut, I1); 
+ MultiMem10 DM10(AddressC2, 8'b0, Clk, MemWriteOut,MemReadOut, J1); 
+ MultiMem11 DM11(AddressC3, 8'b0, Clk, MemWriteOut,MemReadOut, K1); 
+ MultiMem12 DM12(AddressC4, 8'b0, Clk, MemWriteOut,MemReadOut, L1);  
+ MultiMem13 DM13(AddressC1, 8'b0, Clk, MemWriteOut,MemReadOut, O1); 
+ MultiMem14 DM14(AddressC2, 8'b0, Clk, MemWriteOut,MemReadOut, M1); 
+ MultiMem15 DM15(AddressC3, 8'b0, Clk, MemWriteOut,MemReadOut, N1); 
+ MultiMem16 DM16(AddressC4, 8'b0, Clk, MemWriteOut,MemReadOut, P1); 
  
-MuxStateMach(Clk,state); 
+MuxStateMach MuxM(Clk,state); 
  
   MegaMux MM1(AM1 ,BM1 ,C1 ,D1 ,E1 ,F1,G1 ,H1 ,I1 ,J1 ,K1 ,L1 ,O1 ,M1 ,N1 ,P1 ,OutM1 ,state);
   MegaMux MM2(AM1 ,BM1 ,C1 ,D1 ,E1 ,F1,G1 ,H1 ,I1 ,J1 ,K1 ,L1 ,O1 ,M1 ,N1 ,P1 ,OutM2 ,state);
@@ -150,22 +158,22 @@ MuxStateMach(Clk,state);
  MegaMux MM15(AM1 ,BM1 ,C1 ,D1 ,E1 ,F1,G1 ,H1 ,I1 ,J1 ,K1 ,L1 ,O1 ,M1 ,N1 ,P1 ,OutM15,state);
  MegaMux MM16(AM1 ,BM1 ,C1 ,D1 ,E1 ,F1,G1 ,H1 ,I1 ,J1 ,K1 ,L1 ,O1 ,M1 ,N1 ,P1 ,OutM16,state);
   
-  R_EX RegtoEXpipeline( OutM1 ,1, //hardcode values here
-                        OutM2 ,2,
-                        OutM3 ,3,
-                        OutM4 ,4,
-                        OutM5 ,5,
-                        OutM6 ,6,
-                        OutM7 ,7,
-                        OutM8 ,8,
-                        OutM9 ,9,
-                        OutM10,10,
-                        OutM11,11,
-                        OutM12,12,
-                        OutM13,13,
-                        OutM14,14,
-                        OutM15,15,
-                        OutM16,16,
+  R_EX RegtoEXpipeline( OutM1 ,8'h63, //hardcode values here
+                        OutM2 ,8'h63,
+                        OutM3 ,8'h63,
+                        OutM4 ,8'h63,
+                        OutM5 ,8'h63,
+                        OutM6 ,8'h63,
+                        OutM7 ,8'h63,
+                        OutM8 ,8'h63,
+                        OutM9 ,8'h63,
+                        OutM10,8'h63,
+                        OutM11,8'h63,
+                        OutM12,8'h63,
+                        OutM13,8'h63,
+                        OutM14,8'h63,
+                        OutM15,8'h63,
+                        OutM16,8'h0,
                         A1,B1,
                         A2,B2,
                         A3,B3,
@@ -182,6 +190,8 @@ MuxStateMach(Clk,state);
                         A14,B14,
                         A15,B15,
                         A16,B16,
+                        OutMEM,OutEX,
+                        C_Out,C_EX1,
                         Clk);
   
 
@@ -213,7 +223,7 @@ MuxStateMach(Clk,state);
     adder adder8(Out15,Out16,AOut8);
     
     A1P AP1(AOut1,AOut2,AOut3,AOut4,AOut5,AOut6,AOut7,AOut8,
-            A1Out1,A1Out2,A1Out3,A1Out4,A1Out5,A1Out6,A1Out7,A1Out8,Clk);
+            A1Out1,A1Out2,A1Out3,A1Out4,A1Out5,A1Out6,A1Out7,A1Out8,OutEX,OutEX2,C_EX1,C_EX2,Clk);
     
      adder adder9(A1Out1,A1Out2,AOut9);
     adder adder10(A1Out3,A1Out4,AOut10);
@@ -224,8 +234,10 @@ MuxStateMach(Clk,state);
     adder adder14(AOut11,AOut12,AOut14);
     
     adder adder15(AOut13,AOut14,AOut15);
+    
+    Comparator Comp(Clk,AOut15,XCoord,YCoord,Sad,OutEX2,C_EX2);//enable for comparator?
 
    always@(*) begin
-   Something <=  AOut15;
+   Something <=  Sad;
    end
 endmodule

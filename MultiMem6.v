@@ -1,6 +1,4 @@
-`timescale 1ns / 1ps
-
-module MultiMem(Address, WriteData, Clk, MemWrite, MemRead, ReadData);
+module MultiMem6(Address, WriteData, Clk, MemWrite, MemRead, ReadData);
 	input [7:0] Address; //index for desired data
 	input [7:0] WriteData; 
 	input Clk;
@@ -14,7 +12,8 @@ module MultiMem(Address, WriteData, Clk, MemWrite, MemRead, ReadData);
        // for(i =0; i < 256; i = i+1) begin	// this needs replaced with the readme initialization and the data mem file broken into 16 files to be loaded from, or hard code the values
        // mem[i] <= 0;
       //  end
-         $readmemh ("DM1.txt", mem);
+        // $readmemh ("Instruction_memory.data", memory);
+        $readmemh ("DM6.txt", mem);
 	end
 	
 	always@(posedge Clk) begin
