@@ -20,11 +20,12 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module top(Clk,Reset,Something);
+module top(Clk,Reset,out7,en_out);
 
 input Clk,Reset;
-
-output reg [11:0] Something;
+output [6:0] out7;
+output [7:0] en_out;
+//output reg [11:0] Something;
 wire [7:0]  A1,B1;
 wire [7:0]  A2,B2;
 wire [7:0]  A3,B3;
@@ -111,7 +112,7 @@ wire [11:0] Sad;
 wire [5:0] XCoord,YCoord;
 wire C_EN,C_EX1,C_EX2,C_Out;
 
- //ClkDiv CD(Clk, Reset, ClkOut);
+ //ClkDiv CD(ClkOut , Reset, Clk);
   Counter CNTR(Out0,Out0,Clk,Reset);
 
  InstructionMemory IM(10'b0, Instruction); 
@@ -120,7 +121,7 @@ Controller CT(Instruction,MemWrite,MemRead,C_EN);
 
  InstrToMEM I_MEM(Clk,MemWrite,MemRead,MemWriteOut,MemReadOut,Out0,OutMEM,C_EN,C_Out);
   
- MemStateMach mem_state(Clk,AddressC1,AddressC2,AddressC3,AddressC4);
+ MemStateMach mem_state(Clk,AddressC1,AddressC2,AddressC3,AddressC4,C_Out);
   
   MultiMem DM1(AddressC1, 8'b0, Clk, MemWriteOut,MemReadOut, AM1); //c1
   MultiMem2 DM2(AddressC2, 8'b0, Clk, MemWriteOut,MemReadOut, BM1); //c2
@@ -139,7 +140,7 @@ Controller CT(Instruction,MemWrite,MemRead,C_EN);
  MultiMem15 DM15(AddressC3, 8'b0, Clk, MemWriteOut,MemReadOut, N1); 
  MultiMem16 DM16(AddressC4, 8'b0, Clk, MemWriteOut,MemReadOut, P1); 
  
-MuxStateMach MuxM(Clk,state); 
+MuxStateMach MuxM(Clk,state,C_Out); 
  
   MegaMux MM1(AM1 ,BM1 ,C1 ,D1 ,E1 ,F1,G1 ,H1 ,I1 ,J1 ,K1 ,L1 ,O1 ,M1 ,N1 ,P1 ,OutM1 ,state);
   MegaMux MM2(AM1 ,BM1 ,C1 ,D1 ,E1 ,F1,G1 ,H1 ,I1 ,J1 ,K1 ,L1 ,O1 ,M1 ,N1 ,P1 ,OutM2 ,state);
@@ -236,8 +237,10 @@ MuxStateMach MuxM(Clk,state);
     adder adder15(AOut13,AOut14,AOut15);
     
     Comparator Comp(Clk,AOut15,XCoord,YCoord,Sad,OutEX2,C_EX2);//enable for comparator?
-
-   always@(*) begin
-   Something <=  Sad;
-   end
+    
+    Two4DigitDisplay display(Clk, XCoord, YCoord, out7, en_out);
+    
+   //always@(*) begin
+  // Something <=  Sad;
+   //end
 endmodule

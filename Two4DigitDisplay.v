@@ -75,7 +75,7 @@ module Two4DigitDisplay(Clk, NumberA, NumberB, out7, en_out);
     end
     
     //-- to display the number in the appropriate 7-segment digit
-    always @(cnt) begin
+    always @(*) begin
         case(cnt[19:17])  //100MHz/(2^20) = 95.3 Hz
             3'b000: begin en_out <= 8'b11111110; in4 <= firstdigitA; end
             3'b001: begin en_out <= 8'b11111101; in4 <= seconddigitA; end

@@ -19,7 +19,7 @@ set_property PACKAGE_PIN U13 [get_ports {en_out[7]}]
 ##This part is to assign a pin number to 100MHz clock signal
 set_property PACKAGE_PIN E3 [get_ports Clk]		
 set_property IOSTANDARD LVCMOS33 [get_ports Clk]
-create_clock -period 100.000 -name Clk -waveform {0.000 5.000} [get_ports Clk]
+create_clock -period 100.000 -name Clk -waveform {0.000 50.000} [get_ports Clk]
 ##This part is to assign pin numbers for input numbers
 ##Number[6] - Most Significant Bit (MSB) => SW6 (pin U18)
 ##Number[0] - Least Siginificant Bit (LSB) => SW0 (pin J15)
@@ -74,5 +74,5 @@ set_property PACKAGE_PIN L18 [get_ports {out7[0]}]
 
 
 
-set_property PACKAGE_PIN U18 [get_ports Rst]
-set_property IOSTANDARD LVCMOS33 [get_ports Rst]
+set_property PACKAGE_PIN U18 [get_ports Reset]
+set_property IOSTANDARD LVCMOS33 [get_ports Reset]

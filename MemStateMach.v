@@ -1,8 +1,8 @@
 `timescale 1ns / 1ps
 
-module MemStateMach(Clk,AddressC1,AddressC2,AddressC3,AddressC4);
+module MemStateMach(Clk,AddressC1,AddressC2,AddressC3,AddressC4, On);
 	input Clk;
-	//input On;// 0 = run, 1 = first comparison
+	input On;// 0 = run, 1 = first comparison
 	
 	output reg [7:0] AddressC1;
 	output reg [7:0] AddressC2;
@@ -19,9 +19,11 @@ module MemStateMach(Clk,AddressC1,AddressC2,AddressC3,AddressC4);
 	AddressC3 <= 8'd0;
 	AddressC4 <= 8'd0;
 	fourcount <= 2'd0;
+	sixOneCount <= 0;
 	end
 	
-	always@(posedge Clk) begin			
+	always@(posedge Clk) begin
+	if(On) begin
 		if(fourcount == 2'd0)begin
 		//	if(On == 0)begin 
 			AddressC1 <= AddressC1+1; // moves to next first column for window frame comparison
@@ -46,7 +48,7 @@ module MemStateMach(Clk,AddressC1,AddressC2,AddressC3,AddressC4);
 		  sixOneCount <= sixOneCount + 1;
 		end
 		fourcount <= fourcount + 1;
-		
+		end
 		
 	end
 	
